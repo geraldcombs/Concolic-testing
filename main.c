@@ -201,9 +201,16 @@ int main(void)
 	memset(&vexArchInfo, 0, sizeof(VexArchInfo));
 	VexAbiInfo vexAbiInfo;
 	memset(&vexAbiInfo, 0, sizeof(VexAbiInfo));
+#if defined(__i386__)
 	vta.arch_guest = VexArchX86;
-	vta.archinfo_guest = vexArchInfo;
 	vta.arch_host = VexArchX86;
+#elif defined(__amd64__)
+	vta.arch_guest = VexArchAMD64;
+	vta.arch_host = VexArchAMD64;
+#else
+#error Architecture not supported.
+#endif
+	vta.archinfo_guest = vexArchInfo;
 	vta.archinfo_host = vexArchInfo;
 	vta.abiinfo_both = vexAbiInfo;
 
